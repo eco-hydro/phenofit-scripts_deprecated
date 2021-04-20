@@ -43,7 +43,7 @@ get_pheno <- function(site, var = "MODGPP_0m"){
                              methods = c("AG", "zhang", "beck", "elmore", 'Gu'), #,"klos"
                              nptperyear = 365, debug = F, wFUN = bisquare,
                              south = x$lat[1] < 0)
-        # p <- plot_phenofit(fit) + ggtitle(file); print(p)
+        # p <- plot_curvefits(fit) + ggtitle(file); print(p)
         fit
     }, error = function(e){
         message(sprintf("%s:%s", file, e$message))

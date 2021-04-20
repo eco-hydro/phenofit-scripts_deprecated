@@ -63,7 +63,7 @@ calsite_pheno <- function(sitename, df, var = c('MODGPP_0m', 'GPPobs', 'GPPsim')
         if (saveSingle){
             file <- sprintf('Figs/%s.pdf', sitename)
             CairoPDF(file, width = 10, height = 6)
-            p <- plot_phenofit(fit) + ggtitle(sitename)
+            p <- plot_curvefits(fit) + ggtitle(sitename)
             print(p)
             dev.off()
         }
@@ -158,7 +158,7 @@ yfits <- dlply(df, .(site), function(x) {
                              nptperyear = nptperyear, debug = F, wFUN = wTSM,
                              ymax_min = ymax_min,
                              south = x$lat[1] < 0)
-        # print(plot_phenofit(fit) + ggtitle(x$site[1]))
+        # print(plot_curvefits(fit) + ggtitle(x$site[1]))
         # show_legend()
         # dev.off()
     }, error = function(e){
@@ -183,14 +183,14 @@ for (i in 24:46){
                          nptperyear = nptperyear, debug = F, wFUN = wTSM,
                          ymax_min = ymax_min,
                          south = x$lat[1] < 0)
-    # print(plot_phenofit(fit) + ggtitle(x$site[1]))
+    # print(plot_curvefits(fit) + ggtitle(x$site[1]))
 }
 ```
 ```{r}
 x$SummaryQA %<>% factor() %>% mapvalues(c("0", "1", "2", "3"), c("good", "margin", "snow&ice", "cloud"))
 p1 <- ggplot(x, aes(date, NDVI_500m)) + 
     geom_point(aes(shape = SummaryQA, color = SummaryQA), size = 4) + geom_line()
-p2 <- plot_phenofit(fit)
+p2 <- plot_curvefits(fit)
 ```
 
 ```{r message=FALSE, warning=FALSE}

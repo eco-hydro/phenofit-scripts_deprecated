@@ -25,5 +25,5 @@ print(mean(stat$NSE, na.rm = T))
 # svg("Figure1_phenofit_curve_fitting.svg", 11, 7)
 # Cairo::CairoPDF(file_pdf, 11, 6) #
 # dev.off()
-g <- plot_phenofit(fit, d, titlestr)
+g <- plot_curvefits(fit, d, titlestr)
 grid::grid.newpage(); grid::grid.draw(g)# plot to check the curve fitting

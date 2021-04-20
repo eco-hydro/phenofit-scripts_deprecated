@@ -1,6 +1,6 @@
 source("test/load_pkgs.R")
 source("test/07_whit/dat_flux&cam_phenofit.R")
-# source("R/plot_phenofit.R")
+# source("R/plot_curvefits.R")
 
 ################################################################################
 # lambda     <- 5    # Whittaker parameter

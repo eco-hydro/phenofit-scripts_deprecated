@@ -67,7 +67,7 @@ if (Fig1_rep) {
         CairoPDF("phenofit_AVHRR_rep26.pdf", 11, 7)
         foreach(p = r, i = icount(2), name = names(r)) %do% {
             newpage <- ifelse(i == 1, FALSE, TRUE)
-            phenofit_plot(p, "fitting", methods, title = name, title.ylab, newpage = newpage)
+            plot_phenofit(p, "fitting", methods, title = name, title.ylab, newpage = newpage)
         }
         dev.off()
     }
@@ -76,7 +76,7 @@ if (Fig1_rep) {
     methods <- c("Beck")
     ps <- foreach(p = r, i = icount(), name = names(r)) %do% {
         newpage <- ifelse(i == 1, FALSE, TRUE)
-        phenofit_plot(p, "fitting", methods, title = name, title.ylab,
+        plot_phenofit(p, "fitting", methods, title = name, title.ylab,
                       Isplot = FALSE, show.legend = FALSE, newpage = newpage)
     }
     FigsToPages(ps, lgd, "NDVI", file = "phenofit_TP_rep26.pdf", width = 10, nrow=6)

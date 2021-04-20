@@ -3,7 +3,7 @@ source("test/load_pkgs.R")
 source("test/07_whit/main_phenofit_test.R")
 source("test/07_whit/dat_flux&cam_phenofit.R")
 source('test/stable/ggplot/geom_boxplot_no_outlier.R')
-# source("R/plot_phenofit.R")
+# source("R/plot_curvefits.R")
 
 # stations212 <- fread("F:/Github/MATLAB/PML/data/flux-212.txt")
 

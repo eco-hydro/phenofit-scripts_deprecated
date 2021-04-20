@@ -84,7 +84,7 @@ yfits <- dlply(df_show, .(site), function(d) {
                      nptperyear = nptperyear, debug = F, wFUN = wTSM, 
                      ymax_min = ymax_min, 
                      south = d$lat[1] < 0)
-        p <- plot_phenofit(fit, d, sprintf('[%s]: %s', d$IGBP[1], d$site[1]))
+        p <- plot_curvefits(fit, d, sprintf('[%s]: %s', d$IGBP[1], d$site[1]))
         print(p)
         # show_legend()
         # dev.off()
@@ -130,7 +130,7 @@ yfits <- dlply(df[1:1000], .(site), function(d) {
                      nptperyear = nptperyear, debug = F, wFUN = wTSM, 
                      ymax_min = ymax_min, 
                      south = d$lat[1] < 0)
-        plot_phenofit(fit, d, sprintf('[%s]: %s', d$IGBP[1], d$site[1]))
+        plot_curvefits(fit, d, sprintf('[%s]: %s', d$IGBP[1], d$site[1]))
         # show_legend()
         # dev.off()
     }, error = function(e) {
@@ -152,7 +152,7 @@ fit <- curvefit_site(d$date, d$y,
                      nptperyear = nptperyear, debug = F, wFUN = wTSM, 
                      ymax_min = ymax_min, 
                      south = d$lat[1] < 0)
-plot_phenofit(fit, d)
+plot_curvefits(fit, d)
 ```
 
 ```{r message=FALSE, warning=FALSE}

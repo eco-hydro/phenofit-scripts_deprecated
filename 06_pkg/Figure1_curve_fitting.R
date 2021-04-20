@@ -24,7 +24,7 @@ varname <- "EVI_500m"
 I_var   <- which(colnames(df) == varname[1])
 colnames(df)[I_var] <- "y"
 
-# remap SummaryQA factor level, plot_phenofit also use this variable
+# remap SummaryQA factor level, plot_curvefits also use this variable
 if ('SummaryQA' %in% colnames(df)){
     values <- c("0", "1", "2", "3")
     levels <- c(" good", " margin", " snow&ice", " cloud")
@@ -78,7 +78,7 @@ for (i in seq_along(sites)){
     fits[[i]]   <- fit
 
     titlename <- sprintf('(%s) %s, %s', letters[i], d$site[1], d$IGBP[1])
-    p <- plot_phenofit(fit, d, titlename, show.legend = F) +
+    p <- plot_curvefits(fit, d, titlename, show.legend = F) +
         scale_x_date(breaks = ymd(paste0(2001:2016, "0101")),
                        labels = 2001:2016) + ylab("EVI") +
         theme_light() +
