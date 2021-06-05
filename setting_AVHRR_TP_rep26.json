@@ -3,33 +3,13 @@ list(
   "file_veg_text"= "G=/Github/phenology/phenology/phenofit/inst/shiny/phenofit/data/TP_rep26.csv",
   "file_veg_rda"= {},
   "file_type"= "text",
-  "ymin"= 0.08,
-  "nptperyear"= 24,
   "var_y"= "NDVI",
   "is_QC2w"= false,
   "var_qc"= "QC",
-  "qcFUN"= "qc_summary",
   # "site"= "52818",
-  "calendarYear"= TRUE,
-
-  FUN_season    = "season_mov",
-  FUN_rough     = "smooth_wWHIT",
-  methods_fine  = "AG", "Beck", "Elmore", "Zhang",
-  methods_pheno = "TRS", "DER", "Zhang", "Gu"
-  wFUN_rough    = "wBisquare",
-  wFUN_fine     = "wBisquare",
   
-  "frame"  = 10, # SG
-  "lambda" = 2, # Whittaker
-  "nf"     = 4, # Hants
-  
-  "iters_rough"= 2,
-  "max_extend_month_rough"= 2,
-  "r_max"= 0.2,
-  "r_min"= 0,
-  "rtrough_max"= 0.8,
-  "iters_fine"= 2,
-  "max_extend_month_fine"= 3,
-  "nextend_fine"= 2,
-  "use.rough"= false,
+  max_extend_month_rough= 2,
+  max_extend_month_fine= 3,
+  nextend_fine= 2,
+  use.rough= false,
 )

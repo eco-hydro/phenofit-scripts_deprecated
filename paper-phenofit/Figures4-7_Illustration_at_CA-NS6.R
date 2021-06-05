@@ -35,6 +35,7 @@ library(phenofit)
                     iters = 2,
                     nextend = 2,
                     wmin = wmin,
+                    constrain = TRUE,
                     maxExtendMonth = maxExtendMonth, minExtendMonth = minExtendMonth,
                     minPercValid = minPercValid)
 
@@ -54,12 +55,12 @@ Ipaper::write_fig({ plot_season(INPUT, brks, ylab = "EVI") }, "Figure4_seasons.p
 
 # fine curvefitting
 g <- plot_curvefits(dfit, brks, title = NULL, cex = 1.5, title.ylab = "EVI", angle = 0)
-Ipaper::write_fig(g, "Figure5_curvefitting.pdf", 8, 6, show = FALSE)
+Ipaper::write_fig(g, "Figure5_curvefitting_unconstrain.pdf", 8, 6, show = TRUE)
 
 # extract phenology metrics, only the first 3 year showed at here
 write_fig({
     l_pheno <- get_pheno(fit[1:3], method = "AG", TRS = TRS, IsPlot = TRUE, show_title = FALSE)
-}, "Figure6_phenology_metrics.pdf", 8, 4, show = FALSE)
+}, "Figure6_phenology_metrics.pdf", 8, 4, show = TRUE)
 
 
 {

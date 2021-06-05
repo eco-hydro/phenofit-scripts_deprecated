@@ -26,7 +26,7 @@ IDs = sp$ID %>% set_names(., .)
 lambda0    = 15
 nptperyear = 23
 
-library(glue)
+# library(glue)
 # InitCluster(12)
 lst_EVI = foreach(id = IDs, icount()) %do% {
     if (id != 29) return()
