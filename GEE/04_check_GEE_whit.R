@@ -3,7 +3,7 @@ library(tidyverse)
 library(data.table)
 library(magrittr)
 library(phenofit)
-library(plyr)
+library(dplyr)
 library(lubridate)
 
 indir <- "D:/Documents/GoogleDrive" # /phenofit/data

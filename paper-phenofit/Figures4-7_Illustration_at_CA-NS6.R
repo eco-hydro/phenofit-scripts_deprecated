@@ -5,7 +5,7 @@ library(phenofit)
     lambda         <- 8
     nptperyear     <- 23
     minExtendMonth <- 0.5
-    maxExtendMonth <- 1
+    extendMonthMin <- 1
     minPercValid   <- 0
     wFUN           <- wTSM # wBisquare
     wmin           <- 0.2
@@ -25,7 +25,7 @@ library(phenofit)
 
     brks <- season_mov(INPUT,
                        FUN = smooth_wWHIT, wFUN = wFUN,
-                       maxExtendMonth = 3,
+                       extendMonthMin = 3,
                        wmin = wmin, r_min = 0.1)
 
     ## 2.4 Curve fitting
@@ -36,7 +36,7 @@ library(phenofit)
                     nextend = 2,
                     wmin = wmin,
                     constrain = TRUE,
-                    maxExtendMonth = maxExtendMonth, minExtendMonth = minExtendMonth,
+                    extendMonthMin = extendMonthMin, minExtendMonth = minExtendMonth,
                     minPercValid = minPercValid)
 
     ## check the curve fitting parameters

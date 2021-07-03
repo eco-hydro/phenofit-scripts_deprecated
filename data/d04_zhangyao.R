@@ -5,7 +5,7 @@ d_obs$date %<>% ymd()
 # 2. zhang yao, 2017, scientific data, VPMGPP, 8day -------------------------------
 files <- dir("C:/Users/kon055/Desktop/VPMGPP", full.names = T) %>%
     set_names(gsub(".csv","", basename(.)))
-d_vpm <- ldply(files, fread, .id = "site")[, c(1, 3, 4)] %>%
+d_vpm <- map_df(files, fread, .id = "site")[, c(1, 3, 4)] %>%
     set_names(c("site", "date", "GPP")) %>% as.data.table()
 d_vpm[, date := as.Date(date, "%Y%j")]
 d_vpm %<>% set_colnames(c("site", "date", "GPP_vpm"))

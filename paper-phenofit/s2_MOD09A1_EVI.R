@@ -47,8 +47,8 @@ lst_EVI = foreach(id = IDs, icount()) %do% {
         # }
         # if (all(is.na(d$y))) return()
         minExtendMonth = 0.5
-        maxExtendMonth = 1
-        # if (sitename %in% c("US-Prr", "FI-Sod", "CA-NS2")) maxExtendMonth = 5 # long winter
+        extendMonthMin = 1
+        # if (sitename %in% c("US-Prr", "FI-Sod", "CA-NS2")) extendMonthMin = 5 # long winter
         # only optim lambda when lambda_opt < 2
         lambda <- tryCatch({
             l_lambda = v_curve(d[!is.na(y)], lg_lambdas = seq(1, 3, 0.1), IsPlot = FALSE)
@@ -59,20 +59,20 @@ lst_EVI = foreach(id = IDs, icount()) %do% {
         # return(lambda)
         if (lambda < 150) {
             message(sprintf("%s: lambda = %f", sitename, lambda))
-            maxExtendMonth = 0.5
+            extendMonthMin = 0.5
             minExtendMonth = 0
         } #else lambda = lambda0
         # lambda = NULL
         title = sprintf("[%03d] lat=%.2f, lon=%.2f, lambda=%.2f",
                         id, st$lat[i], st$lon[i], lambda)
         tryCatch({
-            l = phenofit_site(d$y, d$t, d$w, d$QC_flag, nptperyear = nptperyear,
+            l = process_phenofit(d$y, d$t, d$w, d$QC_flag, nptperyear = nptperyear,
                               brks = NULL,
                               wFUN = wTSM,
                               .check_season = TRUE,
                               rm.closed = TRUE,
                               lambda = lambda,
-                              maxExtendMonth = maxExtendMonth, minExtendMonth = minExtendMonth,
+                              extendMonthMin = extendMonthMin, minExtendMonth = minExtendMonth,
                               # south = FALSE,
                               verbose = FALSE,
                               ymin = 0.05, wmin = 0.1, wsnow = 0.8,
@@ -135,7 +135,7 @@ save(lst_EVI, file = "pheno_MOD09A1_EVI_st166.rda")
 
     brks <- season_mov(INPUT,
                        FUN = smooth_wWHIT, wFUN = wTSM,
-                       maxExtendMonth = 3,
+                       extendMonthMin = 3,
                        lambda = 1e3,
                        r_min = 0.03,
                        .check_season = FALSE,

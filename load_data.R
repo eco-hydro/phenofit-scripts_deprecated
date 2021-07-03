@@ -144,8 +144,8 @@ getPheno_phenofit <- function(fit, INPUT, brks, d, file_pdf, titlestr) {
     # print(params$AG)
 
     ## Get GOF information
-    stat <- ldply(fit$fits, function(fits_meth) {
-        ldply(fits_meth, statistic.fFIT, .id = "flag")
+    stat <- map_df(fit$fits, function(fits_meth) {
+        map_df(fits_meth, statistic.fFIT, .id = "flag")
     }, .id = "meth")
     fit$stat <- stat
     # print(head(stat))
@@ -199,7 +199,7 @@ get_phenofit_GPPobs <- function(sitename,
         methods = c("AG", "zhang", "beck", "elmore"), # ,"klos",, 'Gu'
         debug = F,
         wFUN = wFUN,
-        nextend = 5, maxExtendMonth = 2, minExtendMonth = 1 / 3,
+        nextend = 5, extendMonthMin = 2, minExtendMonth = 1 / 3,
         # qc = as.numeric(dnew$SummaryQA),
         minPercValid = 0.2,
         print = FALSE
@@ -222,7 +222,7 @@ get_phenofit <- function(sitename, df, st, prefix_fig = "phenofit_v0.1.6", IsPlo
                          ypeak_min = 0.05,
                          wFUN_season = wTSM, wFUN_fit = wFUN_season,
                          lambda = NULL, isVarLambda = FALSE,
-                         nextend = 5, maxExtendMonth = 3, minExtendMonth = 1) {
+                         nextend = 5, extendMonthMin = 3, minExtendMonth = 1) {
     d <- df[site == sitename, ] # get the first site data
     sp <- st[site == sitename, ] # station point
     south <- sp$lat < 0
@@ -277,7 +277,7 @@ get_phenofit <- function(sitename, df, st, prefix_fig = "phenofit_v0.1.6", IsPlo
                 methods = c("AG", "zhang", "beck", "elmore"), # ,"klos",, 'Gu'
                 debug = F,
                 wFUN = wFUN_fit,
-                nextend = nextend, maxExtendMonth = maxExtendMonth, minExtendMonth = minExtendMonth,
+                nextend = nextend, extendMonthMin = extendMonthMin, minExtendMonth = minExtendMonth,
                 qc = as.numeric(dnew$QC_flag),
                 minPercValid = 0.2,
                 print = FALSE
@@ -393,7 +393,7 @@ select_valid <- function(df, noise_perc = 0.3, group = F) {
         ymin = quantile(y, alpha / 2, na.rm = T),
         ymax = quantile(y, 1 - alpha / 2, na.rm = T)
     ), .(site)] %>%
-        plyr::mutate(
+        mutate(
             A = ymax - ymin,
             brk_min = ymin + 0.2 * A,
             brk_max = ymin + 0.6 * A

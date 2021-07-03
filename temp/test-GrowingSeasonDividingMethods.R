@@ -13,7 +13,7 @@ library(lubridate)
 library(magrittr)
 library(Cairo)
 library(tidyverse)
-library(plyr)
+library(dplyr)
 
 dt <- dt_MOD13A1[, .(site, IGBPname = IGBP, lat, long, t = date, y = EVI, SummaryQA, Tn)]
 dt[, ":="(w = qc_summary(SummaryQA))]

@@ -8,42 +8,13 @@ source("R/curvefits.R")
 source('R/smooth_wWHIT_lambda.R')
 source('test/07_whit/main_gee_Whittaker.R')
 
-## MAKE A legend
-make_legend <- function(linename = c("iter1", "iter2", "whit"),
-        linecolor = c("blue", "red", "black")){
-    qc_levels <- c("good", "margin", "snow", "cloud")
-    qc_colors <- c("grey60", "#00BFC4", "#F8766D", "#C77CFF") %>% set_names(qc_levels)
-    qc_shapes <- c(19, 15, 4, 17) %>% set_names(qc_levels)
-    npoints   <- length(qc_levels)
-
-    labels <- c(qc_levels,linename)
-    colors <- c(qc_colors, linecolor)
-
-    # labels <- c(" good", " margin", " snow/ice", " cloud", linename)
-    # colors <- c("grey60", "#00BFC4", "#F8766D", "#C77CFF", linecolor)
-    nline <- length(linename)
-    pch <- c(qc_shapes, rep(NA, nline))
-
-    lty <- rep(0, npoints);  lty[3] <- 1
-    lty <- c(lty, rep(1, nline))
-    lwd <- c(rep(1, npoints), rep(3, nline))
-
-    I   <- 1:length(colors)
-    lgd <- grid::legendGrob(labels[I], pch = pch[I], nrow = 1,
-                       # do.lines = T,
-                       gp=grid::gpar(lty = lty[I], lwd = lwd[I],
-                                     cex = 0.65, fontsize = 20,
-                               col = colors[I], fill = colors[I]))
-    lgd$children[[5]]$children[[1]]$children %<>% .[2] # fix cross point type
-    return(lgd)
-}
 
 lgd <- make_legend(linename = c("raw", "smoothed"), linecolor = c("black", "red"))
 # grid.draw(lgd)
 
 stat_season <- function(INPUT, brks){
     d_org <- as.data.table(INPUT[c("t", "y", "w")])
-    d_fit <- brks$whit %>% .[,.SD,.SDcols=c(1, ncol(.))] %>% set_colnames(c("t", "ypred"))
+    d_fit <- brks$fit %>% .[,.SD,.SDcols=c(1, ncol(.))] %>% set_colnames(c("t", "ypred"))
     d <- merge(d_org, d_fit, by = "t")
 
     stat <- with(d, GOF_extra2(y, ypred))# %>% as.list()
@@ -68,13 +39,13 @@ plot_season <- function(INPUT, brks, plotdat, ylu, IsOnlyPlotbad = FALSE){
     # if(IsPlot && (NSE < 0 && cv < 0.2)){
     if (IsOnlyPlotbad && stat['NSE'] < 0.3) return()
 
-    t  <- brks$whit$t
+    t  <- brks$fit$t
     dt <- brks$dt
-    zs <- dplyr::select(brks$whit,dplyr::matches("ziter*"))
+    zs <- dplyr::select(brks$fit,dplyr::matches("ziter*"))
     ypred <- last(zs)
 
     # if (missing(xlim))
-    xlim <- c(first(brks$dt$beg), last(brks$dt$end))
+    xlim <- c(first(brks$dt$time_start), last(brks$dt$end))
 
     xlim <- c("2000-01-01", "2017-12-31") %>% ymd()
     at   <- (seq(2000, 2018, 3)*10000+0101) %>% ymd()
@@ -93,7 +64,7 @@ plot_season <- function(INPUT, brks, plotdat, ylu, IsOnlyPlotbad = FALSE){
 
     # 7.2 plot break points
     # points(dt$peak, dt$y_peak, pch=20, cex = 1.8, col="red")
-    # points(dt$beg , dt$y_beg , pch=20, cex = 1.8, col="blue")
+    # points(dt$time_start , dt$y_beg , pch=20, cex = 1.8, col="blue")
     # points(dt$end , dt$y_end , pch=20, cex = 1.8, col="blue")
 
     if (!missing(ylu)) abline(h=ylu, col="red", lty=2) # show ylims
@@ -172,7 +143,7 @@ pushViewport(viewport(x = 0.5, y = 0.04, width=0.8, height=0.1))
 grid.draw(lgd)
 dev.off()
 
-# b2 <- rough_fitting(sitename, df, st, .FUN = smooth_wWHIT, lambda = NULL, T, IsOptim_lambda = T, iters = iters)
+# b2 <- rough_fitting(sitename, df, st, .FUN = smooth_wWHIT, lambda = NULL, T, .lambda_vcurve = T, iters = iters)
 # title("wWHd_optim")
 # info <- list(wWH2 = a$GOF,
 #              wWHd_v0 = b1$GOF,

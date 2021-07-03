@@ -3,7 +3,7 @@ wFUN = wTSM#wBisquare#wTSM
 fit  <- curvefits(INPUT, brks2, lambda =lambda,
                   methods = c("zhang"), #,"klos",, 'Gu'， "AG",, "beck", "elmore"
                   nptperyear = nptperyear, debug = F, wFUN = wFUN,
-                  nextend = 2, maxExtendMonth = 3, minExtendMonth = 1,
+                  nextend = 2, extendMonthMin = 3, minExtendMonth = 1,
                   qc = as.numeric(dnew$SummaryQA), minPercValid = 0.2,
                   print = print)
 fit$INPUT   <- INPUT
@@ -15,8 +15,8 @@ print(str(params, 1))
 print(params$AG)
 
 ## Get GOF information
-stat  <- ldply(fit$fits, function(fits_meth){
-    ldply(fits_meth, statistic.fFIT, .id = "flag")
+stat  <- map_df(fit$fits, function(fits_meth){
+    map_df(fits_meth, statistic.fFIT, .id = "flag")
 }, .id = "meth")
 fit$stat <- stat
 print(head(stat))

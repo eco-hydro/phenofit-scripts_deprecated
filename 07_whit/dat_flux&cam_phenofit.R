@@ -21,11 +21,11 @@ source("test/load_pkgs.R")
 # if (!file.exists(file_flux) || !file.exists(file_cam)){
 #     # phenoflux
 #     infile_flux  <- "file:///D:/Document/GoogleDrive/phenoflux212_MOD13A1_006_0m_buffer.csv"
-#     tidy_MOD13.gee(infile_flux) %>% merge(st_flux[, .(site)]) %>% fwrite(file_flux)
+#     tidy_MOD13(infile_flux) %>% merge(st_flux[, .(site)]) %>% fwrite(file_flux)
 
 #     ## phenocam
 #     infile_cam  <- "file:///D:/Document/GoogleDrive/phenocam133_MOD13A1_006_0m_buffer.csv"
-#     tidy_MOD13.gee(infile_cam) %>% merge(st_cam[, .(site)]) %>% fwrite(file_cam)
+#     tidy_MOD13(infile_cam) %>% merge(st_cam[, .(site)]) %>% fwrite(file_cam)
 # }
 
 st_flux <- fread(file_st_flux)[, .(ID, site, lat, lon, IGBPname)]

@@ -39,7 +39,7 @@ lst_EVI <- foreach(id = IDs, icount()) %dopar% {
     # d[, c("QC_flag", "w") := qc_summary(QC, wmin = 0.1, wmid = wmid)]
     if (all(is.na(d$y))) return()
     minExtendMonth <- 0.5
-    maxExtendMonth <- 1
+    extendMonthMin <- 1
     # only optim lambda when lambda_opt < 2
     lambda <- tryCatch(
         {
@@ -52,7 +52,7 @@ lst_EVI <- foreach(id = IDs, icount()) %dopar% {
     )
     # if (lambda < 150) {
     #     message(sprintf("%s: lambda = %f", sitename, lambda))
-    #     maxExtendMonth = 0.5
+    #     extendMonthMin = 0.5
     #     minExtendMonth = 0
     # } #else lambda = lambda0
     # lambda = NULL
@@ -62,14 +62,14 @@ lst_EVI <- foreach(id = IDs, icount()) %dopar% {
     )
     tryCatch(
         {
-            l <- phenofit_site(d$y, d$t, d$w, d$QC_flag,
+            l <- process_phenofit(d$y, d$t, d$w, d$QC_flag,
                 nptperyear = nptperyear,
                 brks = NULL,
                 wFUN = wTSM,
                 .check_season = TRUE,
                 rm.closed = TRUE,
                 lambda = lambda,
-                maxExtendMonth = maxExtendMonth, minExtendMonth = minExtendMonth,
+                extendMonthMin = extendMonthMin, minExtendMonth = minExtendMonth,
                 # south = FALSE,
                 overwrite = TRUE,
                 verbose = FALSE,
@@ -134,7 +134,7 @@ save(lst_EVI, file = "pheno_MCD15A3H_LAI_st1e2.rda")
 
     brks <- season_mov(INPUT,
                        FUN = smooth_wWHIT, wFUN = wTSM,
-                       maxExtendMonth = 3,
+                       extendMonthMin = 3,
                        lambda = 1e3,
                        r_min = 0.03,
                        .check_season = FALSE,

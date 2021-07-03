@@ -21,7 +21,7 @@
 #
 ## Examples
 # a <- rough_fitting(sitename, df, st, get(method))
-# a$whit[, .(w = witer1 - witer2, z = ziter1 - ziter2)] %>% unique
+# a$fit[, .(w = witer1 - witer2, z = ziter1 - ziter2)] %>% unique
 
 source("test/load_pkgs.R")
 source('test/07_whit/main_gee_Whittaker.R')
@@ -124,7 +124,7 @@ get_roughFitting_GOF <- function(){
 
 # sitename <- "GF-Guy"
 # a <- rough_fitting(sitename, df, st, get(method))
-# plot(a$whit$ziter2, type = "b")
+# plot(a$fit$ziter2, type = "b")
 
 # files <- dir(outdir, recursive = T, full.names = T)
 # names <- basename(dirname(files)) %>% gsub("_0", "", .)

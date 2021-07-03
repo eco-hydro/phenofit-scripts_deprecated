@@ -2,7 +2,6 @@
 
 suppressMessages({
     library(Matrix)
-    library(plyr)
     library(data.table)
     library(tidyverse)
     library(broom)
